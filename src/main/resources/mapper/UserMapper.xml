@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--        private String id;// &#45;&#45;AUTO_INCREMENT '用户id',-->
+<!--        private String username;//VARCHAR(20) NOT NULL UNIQUE, &#45;&#45;'用户名',-->
+<!--        private String password;//CHAR(32) //NOT NULL, &#45;&#45; '密码',-->
+<!--        private String phone; //VARCHAR(20)  //,&#45;&#45; '电话号码',-->
+<!--        private String email; //VARCHAR(30)  //,&#45;&#45; '电子邮箱',-->
+<!--        private int gender;//,&#45;&#45; '性别:0-女，1-男',-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wfit.springbootshop.mapper.UserMapper">
+    <!-- 新增学生信息 -->
+    <insert id="saveUser" parameterType="com.wfit.springbootshop.entity.User">
+        insert into t_user values (
+                                    #{id},
+                                    #{username},
+                                    #{password},
+                                    #{phone},
+                                    #{email},
+                                    #{gender}
+                                     )
+    </insert>
+
+    <!--    修改学生信息-->
+    <update id="updateUser" parameterType="com.wfit.springbootshop.entity.User">
+        update t_user set username = #{username},password = #{password},phone = #{phone},email = #{email},gender = #{gender} where id = #{id}
+    </update>
+
+
+    <!--    删除学生信息-->
+    <delete id="delUser" parameterType="java.lang.String">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <!--    查询学生信息-->
+    <select id="queryUser" resultType="com.wfit.springbootshop.entity.User">
+        select * from t_user
+    </select>
+
+
+</mapper>
