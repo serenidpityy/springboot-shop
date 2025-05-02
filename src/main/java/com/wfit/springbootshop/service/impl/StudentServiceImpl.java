@@ -1,8 +1,8 @@
-package com.wfit.springbootstudent.service.impl;
+package com.wfit.springbootshop.service.impl;
 
-import com.wfit.springbootstudent.mapper.StudentMapper;
-import com.wfit.springbootstudent.pojo.Student;
-import com.wfit.springbootstudent.service.StudentService;
+import com.wfit.springbootshop.mapper.StudentMapper;
+import com.wfit.springbootshop.entity.Student;
+import com.wfit.springbootshop.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

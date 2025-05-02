@@ -1,4 +1,4 @@
-package com.wfit.springbootstudent.pojo;
+package com.wfit.springbootshop.entity;
 
 import lombok.Data;
 
@@ -8,5 +8,4 @@ public class Student {
     private String name;
     private int age;
     private String sex;
-
 }

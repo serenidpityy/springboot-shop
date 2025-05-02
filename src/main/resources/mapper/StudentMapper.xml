@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wfit.springbootstudent.mapper.StudentMapper">
+<mapper namespace="com.wfit.springbootshop.mapper.StudentMapper">
     <!-- 新增学生信息 -->
-    <insert id="saveStudent" parameterType="com.wfit.springbootstudent.pojo.Student">
+    <insert id="saveStudent" parameterType="com.wfit.springbootshop.entity.Student">
         insert into t_student values (
                                       #{id},
                                       #{name},
@@ -14,7 +14,7 @@
     </insert>
 
 <!--    修改学生信息-->
-    <update id="updateStudent" parameterType="com.wfit.springbootstudent.pojo.Student">
+    <update id="updateStudent" parameterType="com.wfit.springbootshop.entity.Student">
         update t_student set name = #{name},age=#{age},sex=#{sex} where id = #{id}
     </update>
 
@@ -24,7 +24,7 @@
     </delete>
 
 <!--    查询学生信息-->
-    <select id="queryStudent" resultType="com.wfit.springbootstudent.pojo.Student">
+    <select id="queryStudent" resultType="com.wfit.springbootshop.entity.Student">
         select * from t_student
     </select>
 </mapper>

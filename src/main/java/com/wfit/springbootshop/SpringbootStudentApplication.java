@@ -1,4 +1,4 @@
-package com.wfit.springbootstudent;
+package com.wfit.springbootshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

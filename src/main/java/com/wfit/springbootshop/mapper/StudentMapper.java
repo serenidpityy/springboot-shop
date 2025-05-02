@@ -1,6 +1,6 @@
-package com.wfit.springbootstudent.mapper;
+package com.wfit.springbootshop.mapper;
 
-import com.wfit.springbootstudent.pojo.Student;
+import com.wfit.springbootshop.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

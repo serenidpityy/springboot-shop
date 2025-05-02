@@ -1,19 +1,16 @@
-package com.wfit.springbootstudent.controller;
+package com.wfit.springbootshop.controller;
 
-import com.wfit.springbootstudent.mapper.StudentMapper;
-import com.wfit.springbootstudent.pojo.Student;
-import com.wfit.springbootstudent.service.StudentService;
+import com.wfit.springbootshop.entity.Student;
+import com.wfit.springbootshop.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController//@Controller 和 @ResponseBody
+@RequestMapping("/student") // 添加类级别路径
 public class StudentController {
     @Autowired
     StudentService studentService;

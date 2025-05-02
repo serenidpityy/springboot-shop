@@ -1,6 +1,6 @@
-package com.wfit.springbootstudent.service;
+package com.wfit.springbootshop.service;
 
-import com.wfit.springbootstudent.pojo.Student;
+import com.wfit.springbootshop.entity.Student;
 
 import java.util.List;
 
