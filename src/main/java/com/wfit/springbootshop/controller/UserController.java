@@ -2,6 +2,8 @@ package com.wfit.springbootshop.controller;
 
 import com.wfit.springbootshop.entity.User;
 import com.wfit.springbootshop.service.UserService;
+import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
+import com.wfit.springbootshop.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +13,7 @@ import java.util.Map;
 
 @RestController//@Controller 和 @ResponseBody
 @RequestMapping("/user") // 添加类级别路径  访问时写:localhost:9999/user/add
-public class UserController {
+public class UserController extends BaseController{
     @Autowired
     UserService userService;
 
@@ -21,7 +23,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @GetMapping("/add")
+    @GetMapping("/add") //给其发送json文件时，就会接收到,赋值给user
     public Object addUser(@RequestBody User user){
         userService.addUser(user);
         Map map = new HashMap();
@@ -71,6 +73,32 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/reg")
+    public JsonResult<Void> reg(User user){
+        userService.registerUser(user);
+        return new JsonResult<>(OK);
+    }
+
+
+//    @GetMapping("/reg")
+//    public JsonResult<Void> reg(User user){
+//        //创建响应的结果对象
+//        JsonResult<Void> jsonResult = new JsonResult<>();
+//
+//        try{
+//            userService.registerUser(user);
+//            jsonResult.setState(200);
+//            jsonResult.setMessage("用户注册成功");
+//        }catch (UsernameDuplicatedException e){
+//            jsonResult.setState(4000);
+//            jsonResult.setMessage("用户名被占用");
+//        }catch (Exception e){
+//            jsonResult.setState(4000);
+//            jsonResult.setMessage("异常");
+//        }
+//
+//        return jsonResult;
+//    }
 
 
 
