@@ -73,7 +73,7 @@ public class UserController extends BaseController{
         return map;
     }
 
-    @GetMapping("/reg")
+    @PostMapping("/reg")
     public JsonResult<Void> reg(User user){
         userService.registerUser(user);
         return new JsonResult<>(OK);
