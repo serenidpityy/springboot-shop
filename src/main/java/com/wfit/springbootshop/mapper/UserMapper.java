@@ -12,4 +12,7 @@ public interface UserMapper {
     public void updateUser(User user);
     public void delUser(String id);
     public List<User> queryUser();
+    public User queryUserById(String id);
+    public int updatePasswordById(String id, String password);
+
 }

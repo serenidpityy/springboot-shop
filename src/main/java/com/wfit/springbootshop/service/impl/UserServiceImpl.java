@@ -3,6 +3,7 @@ package com.wfit.springbootshop.service.impl;
 import com.wfit.springbootshop.mapper.UserMapper;
 import com.wfit.springbootshop.entity.User;
 import com.wfit.springbootshop.service.UserService;
+import com.wfit.springbootshop.service.ex.InsertException;
 import com.wfit.springbootshop.service.ex.UserNotExistException;
 import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
 import com.wfit.springbootshop.service.ex.WrongPasswordException;
@@ -83,5 +84,18 @@ public class UserServiceImpl implements UserService {
 
         //说明找不到
         throw new UserNotExistException("用户名不存在");
+    }
+
+    @Override
+    public void updatePasswordById(String id, String password) {
+        int res = UserMapper.updatePasswordById(id,password);
+        if(res == 0) throw new InsertException("插入异常");
+    }
+
+    @Override
+    public User getUserById(String id) {
+        User user = UserMapper.queryUserById(id);
+        if(user == null) throw new UserNotExistException("用户数据不存在");
+        return user;
     }
 }

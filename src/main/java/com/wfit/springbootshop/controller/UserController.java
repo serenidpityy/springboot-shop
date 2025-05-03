@@ -115,12 +115,28 @@ public class UserController extends BaseController{
         User data = userService.login(username,password);
         session.setAttribute("id",data.getId());
         session.setAttribute("username",data.getUsername());
-
+        session.setAttribute("password",data.getPassword());
         //获取session中绑定的数据
 //        System.out.println(getidFromSession(session));
 //        System.out.println(getusernameFromSession(session));
 
         return new JsonResult<>(OK);
+    }
+
+    @PostMapping("/updatePassword")
+    public JsonResult<Void> updatePassword(String oldPassword,String newPassword, HttpSession session){
+        if(oldPassword.equals(getpasswordFromSession(session)) ){
+            String id = getidFromSession(session);
+            userService.updatePasswordById(id,newPassword);
+            setpasswordFromSession(session,newPassword);
+            User user = new User();
+            user.setId(id);
+            user.setPassword(newPassword);
+            return new JsonResult<>(OK);
+        }return new JsonResult<>(Password_inconsistency);
+
+        
+
     }
 
 

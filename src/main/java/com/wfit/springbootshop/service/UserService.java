@@ -11,4 +11,6 @@ public interface UserService {
     public List<User> queryUser();
     public void registerUser(User user);
     public User login(String username, String password);
+    public void updatePasswordById(String id, String password);
+    public User getUserById(String id);
 }

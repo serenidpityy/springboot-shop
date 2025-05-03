@@ -1,9 +1,6 @@
 package com.wfit.springbootshop.controller;
 
-import com.wfit.springbootshop.service.ex.ServiceException;
-import com.wfit.springbootshop.service.ex.UserNotExistException;
-import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
-import com.wfit.springbootshop.service.ex.WrongPasswordException;
+import com.wfit.springbootshop.service.ex.*;
 import com.wfit.springbootshop.util.JsonResult;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class BaseController {
     //状态成功的状态码
     public static final int OK = 200;
+    public static final int Password_inconsistency = 201; //原密码和session中的密码不一致
 
     //请求处理方法，返回值就是需要传递给全端的数据
     //自动将异常对象传递给此方法的参数列表上
@@ -28,9 +26,12 @@ public class BaseController {
         }else if(e instanceof WrongPasswordException){
             jsonResult.setState(5002);
             jsonResult.setMessage("密码错误");
+        }else if(e instanceof InsertException){
+            jsonResult.setState(5003);
+            jsonResult.setMessage("插入时产生未知异常");
         }else if(e instanceof Exception){
             jsonResult.setState(5000);
-            jsonResult.setMessage("注册时产生未知异常");
+            jsonResult.setMessage("产生未知异常");
         }
         return jsonResult;
     }
@@ -39,8 +40,24 @@ public class BaseController {
         return (String)session.getAttribute("id");
     }
 
-    protected final String getusernameFromSession(HttpSession session){
+    public final String getusernameFromSession(HttpSession session){
         return (String)session.getAttribute("username");
+    }
+
+    protected final String getpasswordFromSession(HttpSession session){
+        return (String)session.getAttribute("password");
+    }
+
+    protected final void setidFromSession(HttpSession session,String username){
+        session.setAttribute("username",username);
+    }
+
+    protected final void setusernameFromSession(HttpSession session,String username){
+        session.setAttribute("username",username);
+    }
+
+    protected final void setpasswordFromSession(HttpSession session,String password){
+        session.setAttribute("password",password);
     }
 
 }
