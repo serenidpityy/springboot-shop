@@ -10,4 +10,5 @@ public interface UserService {
     public void delUser(String id);
     public List<User> queryUser();
     public void registerUser(User user);
+    public User login(String username, String password);
 }

@@ -3,7 +3,9 @@ package com.wfit.springbootshop.service.impl;
 import com.wfit.springbootshop.mapper.UserMapper;
 import com.wfit.springbootshop.entity.User;
 import com.wfit.springbootshop.service.UserService;
+import com.wfit.springbootshop.service.ex.UserNotExistException;
 import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
+import com.wfit.springbootshop.service.ex.WrongPasswordException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +66,22 @@ public class UserServiceImpl implements UserService {
         UserMapper.saveUser(user);
 
 
+    }
+
+    //注意使用时
+    @Override
+    public User login(String username, String password) {
+        List<User> list = UserMapper.queryUser();//得到查询的所有值
+        for (User user : list) {
+            if(user.getUsername().equals(username)){
+//                System.out.println(user.getPassword());
+//                System.out.println(password);
+                if(user.getPassword().equals(password))return user;
+                else throw new WrongPasswordException("密码不正确!");
+            }
+        }
+
+        //说明找不到
+        throw new UserNotExistException("用户名不存在");
     }
 }

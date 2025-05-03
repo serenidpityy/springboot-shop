@@ -1,8 +1,11 @@
 package com.wfit.springbootshop.controller;
 
 import com.wfit.springbootshop.service.ex.ServiceException;
+import com.wfit.springbootshop.service.ex.UserNotExistException;
 import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
+import com.wfit.springbootshop.service.ex.WrongPasswordException;
 import com.wfit.springbootshop.util.JsonResult;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 //控制层类的基类
@@ -19,11 +22,25 @@ public class BaseController {
         if(e instanceof UsernameDuplicatedException){
             jsonResult.setState(4000);
             jsonResult.setMessage("用户名被占用");
+        }else if(e instanceof UserNotExistException){
+            jsonResult.setState(5001);
+            jsonResult.setMessage("用户名不存在");
+        }else if(e instanceof WrongPasswordException){
+            jsonResult.setState(5002);
+            jsonResult.setMessage("密码错误");
         }else if(e instanceof Exception){
             jsonResult.setState(5000);
             jsonResult.setMessage("注册时产生未知异常");
         }
         return jsonResult;
+    }
+
+    protected final String getidFromSession(HttpSession session){
+        return (String)session.getAttribute("id");
+    }
+
+    protected final String getusernameFromSession(HttpSession session){
+        return (String)session.getAttribute("username");
     }
 
 }
