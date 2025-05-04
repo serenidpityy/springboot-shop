@@ -1,8 +1,8 @@
 package com.wfit.springbootshop.controller;
 
+import com.wfit.springbootshop.entity.Address;
 import com.wfit.springbootshop.entity.User;
 import com.wfit.springbootshop.service.UserService;
-import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
 import com.wfit.springbootshop.util.JsonResult;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,5 +153,45 @@ public class UserController extends BaseController{
         return new JsonResult<>(OK);
     }
 
+    @PostMapping("/getmember")
+    public JsonResult<User> getmember(HttpSession session){
+        String id = getidFromSession(session);
+
+        User user = new User();
+        user.setMember(userService.getmemberById(id));
+        return new JsonResult<>(OK,user);
+    }
+
+    @PostMapping("/bemember")
+    public JsonResult<Void> bemember(HttpSession session){
+        String id = getidFromSession(session);
+        userService.updatememberByid(id,1);
+        return new JsonResult<>(OK);
+    }
+
+    @PostMapping("/nobemember")
+    public JsonResult<Void> nobemember(HttpSession session){
+        String id = getidFromSession(session);
+        userService.updatememberByid(id,0);
+        return new JsonResult<>(OK);
+    }
+
+
+    @PostMapping("/getaddress")
+    public JsonResult<List<Address>> getaddress(HttpSession session){
+        String id = getidFromSession(session);
+        List<Address> list = userService.queryAddressByUserid(id);
+        for(Address address : list){
+            System.out.println(address.getAddressType());
+        }
+        return new JsonResult<>(OK,list);
+    }
+
+    @PostMapping("/deladdress")
+    public JsonResult<Void> deladdress(@RequestParam("id") String id){
+        System.out.println(id);
+        userService.delAddressByid(id);
+        return new JsonResult<>(OK);
+    }
 
 }

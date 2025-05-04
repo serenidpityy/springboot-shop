@@ -17,13 +17,14 @@
                                     #{password},
                                     #{phone},
                                     #{email},
-                                    #{gender}
+                                    #{gender},
+                                    #{member}
                                      )
     </insert>
 
     <!--    修改学生信息  不返回信息-->
     <update id="updateUser" parameterType="com.wfit.springbootshop.entity.User">
-        update t_user set username = #{username},password = #{password},phone = #{phone},email = #{email},gender = #{gender} where id = #{id}
+        update t_user set username = #{username},password = #{password},phone = #{phone},email = #{email},gender = #{gender},member = #{member} where id = #{id}
     </update>
 
 
@@ -50,6 +51,46 @@
 <!--String id, String phone, String email, String gender-->
     <update id="updateInfoById">
         UPDATE t_user SET phone = #{phone},email = #{email},gender = #{gender} WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID查询会员状态 -->
+    <select id="getmemberById" resultType="int">
+        SELECT member
+        FROM t_user
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据ID设置会员状态 -->
+    <update id="updatememberByid">
+        UPDATE t_user
+        SET member = #{member}
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 查询地址信息 -->
+    <select id="queryAddressByUserid" resultType="com.wfit.springbootshop.entity.Address">
+        SELECT * FROM t_address WHERE userid = #{userid}
+    </select>
+
+    <!-- 删除地址信息 -->
+    <delete id="delAddressByid">
+        DELETE FROM t_address WHERE id = #{id}
+    </delete>
+
+<!--    public void resetAdderssdefaults(String userid);-->
+    <!--    修改学生信息  不返回信息-->
+    <update id="resetAdderssdefaults">
+        update t_address
+        SET defaults = 0
+        where userid = #{userid}
+    </update>
+
+    <!--    public void updateAddressdefaults(String id);-->
+    <update id="updateAddressdefaults" parameterType="com.wfit.springbootshop.entity.Address">
+        update t_address
+        SET defaults = #{val}
+        where id = #{id}
     </update>
 
 

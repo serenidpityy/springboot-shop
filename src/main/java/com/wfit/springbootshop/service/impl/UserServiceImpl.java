@@ -1,7 +1,7 @@
 package com.wfit.springbootshop.service.impl;
 
 import com.wfit.springbootshop.mapper.UserMapper;
-import com.wfit.springbootshop.entity.User;
+import com.wfit.springbootshop.entity.*;
 import com.wfit.springbootshop.service.UserService;
 import com.wfit.springbootshop.service.ex.InsertException;
 import com.wfit.springbootshop.service.ex.UserNotExistException;
@@ -110,4 +110,34 @@ public class UserServiceImpl implements UserService {
         UserMapper.updateInfoById(id,phone,email,gender);
 
     }
+
+    @Override
+    public int getmemberById(String id) {
+        return  UserMapper.getmemberById(id);
+    }
+
+    @Override
+    public void updatememberByid(String id,int member) {
+        UserMapper.updatememberByid(id,member);
+    }
+
+    @Override
+    public List<Address> queryAddressByUserid(String userid) {
+        return UserMapper.queryAddressByUserid(userid);
+    }
+
+    @Override
+    public void delAddressByid(String id) {
+        UserMapper.delAddressByid(id);
+    }
+
+//    @Override
+//    public void resetAdderssdefaults(String userid) {
+//        UserMapper.resetAdderssdefaults(userid);
+//    }
+//
+//    @Override
+//    public void updateAddressdefaults(String id) {
+//        UserMapper.updateAddressdefaults(id);
+//    }
 }

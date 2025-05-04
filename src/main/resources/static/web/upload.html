@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<!--edge浏览器H5兼容设置-->
@@ -118,8 +117,8 @@
 						<div id="collapseTwo" class="panel-collapse collapse in">
 							<div class="panel-body">
 								<div><a href="password.html">修改密码</a></div>
-								<div><a href="userdata.html"><b>个人资料</b></a></div>
-								<div><a href="upload.html">会员</a></div>
+								<div><a href="userdata.html">个人资料</a></div>
+								<div><a href="upload.html"><b>会员</b></a></div>
 								<div><a href="address.html">收货管理</a></div>
 							</div>
 						</div>
@@ -127,56 +126,147 @@
 				</div>
 				<!--左侧导航结束-->
 			</div>
-			<div class="col-md-10	">
+
+<!--			会员-->
+			<div class="col-md-10">
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
 						<li><a href="password.html">修改密码</a></li>
-						<li class="active"><a href="#">个人资料</a></li>
-						<li><a href="upload.html">会员</a></li>
+						<li><a href="userdata.html">个人资料</a></li>
+						<li class="active"><a href="#">会员</a></li>
 						<li><a href="address.html">收货管理</a></li>
 					</ul>
 					<div class="panel-body">
-						<!--修改资料表单开始-->
-						<form id="form-change-info" class="form-horizontal" role="form">
-							<div class="form-group">
-								<label class="col-md-2 control-label">用户名：</label>
-								<div class="col-md-8">
-									<input id="username" type="text" class="form-control" value="孙悟空" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label">电话号码：</label>
-								<div class="col-md-8">
-									<input id="phone" name="phone" type="text" class="form-control" placeholder="请输入电话号码" value="13311311313">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label">电子邮箱：</label>
-								<div class="col-md-8">
-									<input id="email" name="email" type="text" class="form-control" placeholder="请输入电子邮箱" value="sunwk@qq.com">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label">性别：</label>
-								<div class="col-md-8">
-									<label class="radio-inline">
-										<input id="gender-male" type="radio" name="gender" value="1">男
-									</label>
-									<label class="radio-inline">
-										<input id="gender-female" type="radio" name="gender" value="0">女
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<input id="btn-change-info" type="button" class="btn btn-primary" value="修改" />
-								</div>
-							</div>
-						</form>
+						<!-- 会员状态容器 -->
+						<div id="memberContainer" class="text-center" style="padding: 30px;">
+							<!-- 内容由JavaScript动态加载 -->
+						</div>
+
+						<script>
+							// 初始化会员状态
+							$(document).ready(function() {
+								loadMemberStatus();
+							});
+
+							// 加载会员状态
+							function loadMemberStatus() {
+								$.ajax({
+									url: "/user/getmember",
+									type: "POST",
+									dataType: "JSON",
+									success: function(response) {
+										if(response.state === 200) {
+											updateMemberDisplay(response.data.member);
+										} else {
+											showError("状态加载失败：" + response.msg);
+										}
+									},
+									error: function() {
+										showError("网络请求失败，请稍后重试");
+									}
+								});
+							}
+
+							// 更新显示状态
+							function updateMemberDisplay(memberStatus) {
+								const container = $("#memberContainer");
+
+								if(memberStatus == 1) {
+									container.html(`
+                            <h3>🎉 尊贵会员</h3>
+                            <p>有效期至：2025年12月31日</p>
+                            <button onclick="cancelMembership()"
+                                    class="btn btn-warning">
+                                取消会员
+                            </button>
+                        `);
+								} else {
+									container.html(`
+                            <h4>立即加入会员享受特权</h4>
+                            <button onclick="joinMembership()"
+                                    class="btn btn-danger btn-lg">
+                                立即加入会员
+                            </button>
+                        `);
+								}
+							}
+
+							// 加入会员
+							function joinMembership() {
+								$.ajax({
+									url: "/user/bemember",
+									type: "POST",
+									dataType: "JSON",
+									success: function(response) {
+										if(response.state === 200) {  // 统一使用state字段
+											loadMemberStatus();  // 重新加载最新状态
+											showSuccess("会员开通成功！");
+										} else {
+											showError("开通失败：" + response.msg);
+										}
+									},
+									error: function() {
+										showError("网络请求失败");
+									}
+								});
+							}
+
+							// 取消会员
+							function cancelMembership() {
+								if(!confirm("确定要取消会员资格吗？")) return;
+
+								$.ajax({
+									url: "/user/nobemember",
+									type: "POST",
+									dataType: "JSON",
+									success: function(response) {
+										if(response.state === 200) {  // 统一使用state字段
+											loadMemberStatus();  // 重新加载最新状态
+											showSuccess("会员已取消");
+										} else {
+											showError("取消失败：" + response.msg);
+										}
+									},
+									error: function() {
+										showError("网络请求失败");
+									}
+								});
+							}
+
+							// 显示成功提示（优化后的提示方法）
+							function showSuccess(msg) {
+								$("#memberContainer").prepend(`
+                        <div class="alert alert-success alert-dismissible" style="margin-bottom:20px">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            ${msg}
+                        </div>
+                    `);
+								// 3秒后自动消失
+								setTimeout(() => {
+									$(".alert-success").alert('close');
+								}, 3000);
+							}
+
+							// 显示错误提示（优化后的提示方法）
+							function showError(msg) {
+								$("#memberContainer").prepend(`
+                        <div class="alert alert-danger alert-dismissible" style="margin-bottom:20px">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            ${msg}
+                        </div>
+                    `);
+								// 5秒后自动消失
+								setTimeout(() => {
+									$(".alert-danger").alert('close');
+								}, 5000);
+							}
+						</script>
 					</div>
 				</div>
 			</div>
 		</div>
+
+
 		<!--页脚开始-->
 		<div class="clearfix"></div>
 		<footer class="footer">
@@ -262,60 +352,6 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
-
-		<!--	ajax代码的编写-->
-		<script type="text/javascript">
-			//1.监听是否切换到了当前页面
-			$(document).ready(function() {
-				$.ajax({
-					url:"/user/getUserById", //端口号:localhost:9999/ 可以省略
-					type:"POST",
-					data:$("#form-change-info").serialize(),
-					dataType:"JSON",
-					success:function (json) {
-						if(json.state == 200) {
-							//将查询到的数据重置到控件中
-							$("#username").val(json.data.username);
-							$("#phone").val(json.data.phone);
-							$("#email").val(json.data.email);
-
-							//设置标签
-							let radio = json.data.gender == 0?$("#gender-female"):$("#gender-male");
-							//prop()表示给某个元素添加属性及属性的值
-							radio.prop("checked","checked");
-						}
-					},
-					error:function (xhr) {
-						alert("产生未知的错误!" + xhr.status);
-					}
-				});
-
-			});
-
-
-
-			//2.监听按钮是否被点击，如果被点击可以执行一个方法
-			$("#btn-change-info").click(function(){
-
-				$.ajax({
-					url:"/user/changeUserByid", //端口号:localhost:9999/ 可以省略
-					type:"POST",
-					data:$("#form-change-info").serialize(),
-					dataType:"JSON",
-					success:function (json) {
-						if(json.state == 200) alert("信息修改成功");
-						else alert("信息修改失败");
-					},
-					error:function (xhr) {
-						alert("产生未知的错误!" + xhr.status);
-					}
-				});
-
-			});
-
-
-		</script>
-
 	</body>
 
 </html>

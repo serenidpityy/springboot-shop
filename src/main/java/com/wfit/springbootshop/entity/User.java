@@ -10,5 +10,5 @@ public class User {
     private String phone; //VARCHAR(20)  //,-- '电话号码',
     private String email; //VARCHAR(30)  //,-- '电子邮箱',
     private int gender;//,-- '性别:0-女，1-男' 2-未知,
-
+    private int member;
 }
