@@ -13,4 +13,5 @@ public interface UserService {
     public User login(String username, String password);
     public void updatePasswordById(String id, String password);
     public User getUserById(String id);
+    public void changeUserByid(String id,String phone,String email,int gender);
 }

@@ -134,9 +134,23 @@ public class UserController extends BaseController{
             user.setPassword(newPassword);
             return new JsonResult<>(OK);
         }return new JsonResult<>(Password_inconsistency);
+    }
 
-        
+    @PostMapping("/getUserById")
+    public JsonResult<User> getUserById(String id,HttpSession session){
+        User user = userService.getUserById(getidFromSession(session));
+        return new JsonResult<>(OK,user);
+    }
 
+    @PostMapping("/changeUserByid")
+    public JsonResult<Void> changeUserByid(String id, String phone, String email, int gender, HttpSession session){
+        System.out.println(phone);
+        System.out.println(email);
+        System.out.println(gender);
+        id = getidFromSession(session);
+        System.out.println(id);
+        userService.changeUserByid(id,phone,email,gender);
+        return new JsonResult<>(OK);
     }
 
 

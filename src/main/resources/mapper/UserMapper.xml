@@ -47,6 +47,11 @@
         UPDATE t_user SET password = #{password} WHERE id = #{id};
     </update>
 
+<!--String id, String phone, String email, String gender-->
+    <update id="updateInfoById">
+        UPDATE t_user SET phone = #{phone},email = #{email},gender = #{gender} WHERE id = #{id}
+    </update>
+
 
 
 </mapper>

@@ -14,5 +14,5 @@ public interface UserMapper {
     public List<User> queryUser();
     public User queryUserById(String id);
     public int updatePasswordById(String id, String password);
-
+    public void updateInfoById(String id, String phone, String email, int gender);
 }

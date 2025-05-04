@@ -95,7 +95,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(String id) {
         User user = UserMapper.queryUserById(id);
+        System.out.println("user" + user);
         if(user == null) throw new UserNotExistException("用户数据不存在");
         return user;
+    }
+
+    @Override
+    public void changeUserByid(String id, String phone, String email, int gender) {
+        User user = new User();
+        user.setId(id);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setGender(gender); //String id, String phone, String email, String gender
+        UserMapper.updateInfoById(id,phone,email,gender);
+
     }
 }
