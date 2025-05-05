@@ -78,21 +78,5 @@
         DELETE FROM t_address WHERE id = #{id}
     </delete>
 
-<!--    public void resetAdderssdefaults(String userid);-->
-    <!--    修改学生信息  不返回信息-->
-    <update id="resetAdderssdefaults">
-        update t_address
-        SET defaults = 0
-        where userid = #{userid}
-    </update>
-
-    <!--    public void updateAddressdefaults(String id);-->
-    <update id="updateAddressdefaults" parameterType="com.wfit.springbootshop.entity.Address">
-        update t_address
-        SET defaults = #{val}
-        where id = #{id}
-    </update>
-
-
 
 </mapper>

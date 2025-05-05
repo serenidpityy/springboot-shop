@@ -131,13 +131,4 @@ public class UserServiceImpl implements UserService {
         UserMapper.delAddressByid(id);
     }
 
-//    @Override
-//    public void resetAdderssdefaults(String userid) {
-//        UserMapper.resetAdderssdefaults(userid);
-//    }
-//
-//    @Override
-//    public void updateAddressdefaults(String id) {
-//        UserMapper.updateAddressdefaults(id);
-//    }
 }

@@ -22,7 +22,6 @@ public interface UserMapper {
     public List<Address>  queryAddressByUserid(String userid);
     //通过id删除信息
     public void delAddressByid(String id);
-    public void resetAdderssdefaults(String userid);
-    public void updateAddressdefaults(String id,int val);
+
 
 }

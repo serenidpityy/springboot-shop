@@ -21,6 +21,4 @@ public interface UserService {
     public List<Address> queryAddressByUserid(String userid);
     public void delAddressByid(String id);
 
-//    public void resetAdderssdefaults(String userid);
-//    public void updateAddressdefaults(String id);
 }
