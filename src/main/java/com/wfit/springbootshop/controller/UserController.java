@@ -194,4 +194,31 @@ public class UserController extends BaseController{
         return new JsonResult<>(OK);
     }
 
+    public String getAddressuserid(String id){
+        int userid = 0;
+        List<Address> list = userService.queryAddressByUserid(id);
+        for(Address address : list){
+            userid = Math.max(userid,Integer.parseInt(address.getId()));
+        }
+        userid += 1;
+
+        return Integer.toString(userid);
+    }
+
+
+    //添加地址信息 id,userid,address,addresstype,consignee,phone
+    @PostMapping("/addaddress")
+    public JsonResult<Void> addaddress(
+            @RequestParam("addressType") String addressType,
+            @RequestParam("consignee") String consignee,
+            @RequestParam("address") String address,
+            @RequestParam("phone") String phone,
+            HttpSession session) {
+        String id = getidFromSession(session);
+
+        String userid = getAddressuserid(id);
+        userService.addAddress(userid,id,address,addressType,consignee,phone);
+        return new JsonResult<>(OK);
+    }
+
 }

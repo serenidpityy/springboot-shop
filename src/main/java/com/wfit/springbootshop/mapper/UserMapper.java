@@ -1,7 +1,5 @@
 package com.wfit.springbootshop.mapper;
-
-import com.wfit.springbootshop.entity.Address;
-import com.wfit.springbootshop.entity.User;
+import com.wfit.springbootshop.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,6 +20,6 @@ public interface UserMapper {
     public List<Address>  queryAddressByUserid(String userid);
     //通过id删除信息
     public void delAddressByid(String id);
-
-
+    //添加地址信息 id,userid,address,addresstype,consignee,phone
+    public void addAddress(String id,String userid,String address,String addresstype,String consignee,String phone);
 }

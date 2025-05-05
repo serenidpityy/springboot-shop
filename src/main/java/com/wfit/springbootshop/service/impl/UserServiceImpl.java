@@ -16,6 +16,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper UserMapper;
+    @Autowired
+    private UserMapper userMapper;
 
 
     @Override
@@ -130,5 +132,12 @@ public class UserServiceImpl implements UserService {
     public void delAddressByid(String id) {
         UserMapper.delAddressByid(id);
     }
+
+
+    @Override
+    public void addAddress(String id,String userid,String address,String addresstype,String consignee,String phone){
+        UserMapper.addAddress(id,userid,address,addresstype,consignee,phone);
+    }
+
 
 }

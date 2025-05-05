@@ -78,5 +78,17 @@
         DELETE FROM t_address WHERE id = #{id}
     </delete>
 
+<!--    addAddress-->
+    <insert id="addAddress" parameterType="com.wfit.springbootshop.entity.Address">
+        insert into t_address values (
+                                      #{id},
+                                      #{userid},
+                                      #{address},
+                                      #{addresstype},
+                                      #{consignee},
+                                      #{phone}
+                                  )
+    </insert>
+
 
 </mapper>
