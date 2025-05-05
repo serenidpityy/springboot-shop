@@ -324,7 +324,29 @@
 					}
 				});
 			});
+
+			$("#btn-add-to-cart").click(function(){
+				$.ajax({
+					url:"/carts/add_to_cart", //端口号:localhost:9999/ 可以省略
+					type:"POST",
+					data:{
+						"pid":id,
+						"amount":$("#num").val()
+					},
+					dataType:"JSON",
+					success:function (json) {
+						if(json.state == 200) alert("加入购物车成功");
+						else alert("加入购物车失败");
+					},
+					error:function (xhr) {
+						alert("产生未知的错误!" + xhr.status);
+					}
+				});
+
+			});
 		</script>
+
+
 
 	</body>
 
