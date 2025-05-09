@@ -10,6 +10,7 @@ import com.wfit.springbootshop.service.UserService;
 import com.wfit.springbootshop.service.ex.ServiceException;
 import com.wfit.springbootshop.service.ex.UsernameDuplicatedException;
 import com.wfit.springbootshop.service.impl.UserServiceImpl;
+import com.wfit.springbootshop.vo.CartVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -89,4 +90,31 @@ public class CartMapperTests {
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void findVoByUid(){
+        try{
+            List<CartVo> list = cartMapper.findVoByUid("1");
+            for(CartVo cartVo:list){
+                System.out.println("------------------");
+                System.out.println(cartVo);
+                System.out.println("------------------");
+            }
+        }catch (ServiceException e){
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void findByCid(){
+        try{
+            Cart cart = cartMapper.findByCid("1");
+            System.out.println(cart);
+        }catch (ServiceException e){
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

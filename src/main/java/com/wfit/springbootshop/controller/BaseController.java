@@ -29,6 +29,15 @@ public class BaseController {
         }else if(e instanceof InsertException){
             jsonResult.setState(5003);
             jsonResult.setMessage("插入时产生未知异常");
+        }else if(e instanceof AccessDeniedException){
+            jsonResult.setState(5004);
+            jsonResult.setMessage("非法访问");
+        }else if(e instanceof CartNotFoundException){
+            jsonResult.setState(5005);
+            jsonResult.setMessage("购物车数据未找到");
+        }else if(e instanceof UpdateException){
+            jsonResult.setState(5006);
+            jsonResult.setMessage("插入时产生未知异常");
         }else if(e instanceof Exception){
             jsonResult.setState(5000);
             jsonResult.setMessage("产生未知异常");
