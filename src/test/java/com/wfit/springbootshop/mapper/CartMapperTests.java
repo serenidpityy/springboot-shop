@@ -117,4 +117,21 @@ public class CartMapperTests {
         }
     }
 
+    @Test
+    public void findVoByCid(){
+        try{
+            String[] cids = {"1","2","3","4","5"};
+            List<CartVo>list = cartMapper.findVoByCid(cids);
+            for(CartVo cartVo:list){
+                System.out.println(cartVo);
+            }
+
+        }catch (ServiceException e){
+            System.out.println(e.getClass().getSimpleName());
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
 }
