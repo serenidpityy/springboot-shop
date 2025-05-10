@@ -144,11 +144,11 @@ public class UserController extends BaseController{
 
     @PostMapping("/changeUserByid")
     public JsonResult<Void> changeUserByid(String id, String phone, String email, int gender, HttpSession session){
-        System.out.println(phone);
-        System.out.println(email);
-        System.out.println(gender);
+       // System.out.println(phone);
+        //System.out.println(email);
+        //System.out.println(gender);
         id = getidFromSession(session);
-        System.out.println(id);
+        //System.out.println(id);
         userService.changeUserByid(id,phone,email,gender);
         return new JsonResult<>(OK);
     }
@@ -181,15 +181,15 @@ public class UserController extends BaseController{
     public JsonResult<List<Address>> getaddress(HttpSession session){
         String id = getidFromSession(session);
         List<Address> list = userService.queryAddressByUserid(id);
-        for(Address address : list){
-            System.out.println(address.getAddressType());
-        }
+//        for(Address address : list){
+//            System.out.println(address.getAddressType());
+//        }
         return new JsonResult<>(OK,list);
     }
 
     @PostMapping("/deladdress")
     public JsonResult<Void> deladdress(@RequestParam("id") String id){
-        System.out.println(id);
+        //System.out.println(id);
         userService.delAddressByid(id);
         return new JsonResult<>(OK);
     }

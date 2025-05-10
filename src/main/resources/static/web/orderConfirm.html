@@ -109,6 +109,7 @@
 				3.付款成功
 			</div>
 		</div>
+<!--		payment-->
 		<div class="col-md-12">
 			<form id="form-create-order" role="form">
 				<div class="form-group">
@@ -249,11 +250,36 @@
 
 </footer>
 <!--页脚结束-->
+
+
 <script type="text/javascript">
+
+
 	$(document).ready(function (){
 		showCartList();
 	});
 
+
+	$("#btn-create-order").click(function () {
+		let aid = $("#address-list").val();
+		let cids = location.search.substr(1);
+		console.log(aid);
+		console.log(cids);
+
+		// 构建跳转的 URL，包含 aid 和 cids 参数
+		let paymentUrl = "payment.html?";
+
+		// 如果 cids 存在，先添加 cids 参数
+		if (cids) {
+			paymentUrl += `${cids}&`;
+		}
+
+		// 添加 aid 参数
+		paymentUrl += `aid=${aid}`;
+
+		// 跳转到 payment.html 并附带参数
+		window.location.href = paymentUrl;
+	});
 
 	function showCartList(){
 		//清空tbody标签的数据
@@ -316,7 +342,6 @@
 					}
 					$("#all-count").html(allCount);
 					$("#all-price").html(allPrice);
-
 				}
 			},
 			error:function (xhr){
@@ -326,7 +351,6 @@
 			}
 		})
 	};
-
 </script>
 </body>
 
