@@ -272,7 +272,12 @@
                 </div>
                 <div class="form-group">
                     <label>图片上传：</label>
-                    <button type="button" style="width: 100%;" onclick="window.location.href='uploadphoto.html'">上传图片</button>
+                    <input type="file" name="file" id="file-input" accept="image/*" required>
+                    <div id="progress-container">
+                        <progress id="progress-bar" value="0" max="100"></progress>
+                        <p id="progress-text">0% 完成</p>
+                    </div>
+                    <p id="upload-result"></p>
                 </div>
                 <button type="submit">上架商品</button>
             </form>
@@ -296,7 +301,7 @@
                         <th>操作2</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sub-content-ss">
                     <tr>
                         <td>#1001</td>
                         <td>智能手机</td>
@@ -321,7 +326,7 @@
                         <th>数量</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sub-content-ssss">
                     <tr>
                         <td>#1002</td>
                         <td>笔记本电脑</td>
@@ -344,7 +349,7 @@
                         <th>数量</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sub-content-ssssss">
                     <tr>
                         <td>#1003</td>
                         <td>平板电脑</td>
@@ -399,6 +404,15 @@
                 const subPage = this.getAttribute('data-sub-page');
                 document.getElementById(subPage).classList.add('active');
                 document.getElementById('page-title').textContent = this.textContent;
+
+                // 调用对应的接口函数获取数据
+                if (subPage === 'not-shipped') {
+                    getNotShippedOrders();
+                } else if (subPage === 'shipped') {
+                    getShippedOrders();
+                } else if (subPage === 'received') {
+                    getReceivedOrders();
+                }
             });
         });
     }
@@ -449,20 +463,19 @@
         }
 
         $.ajax({
-            url: "/seller/updatePassword", //端口号:localhost:9999/ 可以省略
+            url: "/seller/updatePassword",
             type: "POST",
-            data: { oldPassword:oldPassword,newPassword:newPassword},
+            data: { oldPassword: oldPassword, newPassword: newPassword },
             dataType: "JSON",
-            success: function (json) {
+            success: function(json) {
                 if (json.state == 200) alert("密码修改成功");
                 else if (json.state == 201) alert("原密码错误");
                 else alert("密码修改失败");
             },
-            error: function (xhr) {
+            error: function(xhr) {
                 alert("产生未知的错误!" + xhr.status);
             }
-        })
-
+        });
     }
 
     // 个人资料表单提交处理函数
@@ -472,38 +485,97 @@
         const email = document.getElementById('seller-email').value;
         const gender = document.getElementById('seller-gender').value;
         var genders;
-        console.log(gender);
-        if(gender == "male")genders = 1
-        else genders = 0
+        if (gender == "male") genders = 1;
+        else genders = 0;
 
         $.ajax({
-            url: "/seller/uploadInfo", //端口号:localhost:9999/ 可以省略
+            url: "/seller/uploadInfo",
             type: "POST",
-            data: { name:name,phone:phone,email:email,gender:genders},
+            data: { name: name, phone: phone, email: email, gender: genders },
             dataType: "JSON",
-            success: function (json) {
+            success: function(json) {
                 if (json.state == 200) alert("信息修改成功");
                 else alert("信息修改失败");
             },
-            error: function (xhr) {
+            error: function(xhr) {
                 alert("产生未知的错误!" + xhr.status);
             }
-        })
+        });
     }
 
-    // 上架商品表单提交处理函数
     function handleUploadFormSubmit() {
-        const categoryId = document.getElementById('category-id').value;
-        const title = document.getElementById('title').value;
-        const sellPoint = document.getElementById('sell-point').value;
-        const price = document.getElementById('price').value;
-        const num = document.getElementById('num').value;
-        const image = document.getElementById('image').value;
+        // 获取文件输入元素和文件
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
 
-        // 这里可以添加商品信息验证逻辑
-        alert('商品上架成功！');
-        // 这里可以添加更多的逻辑，例如发送请求到服务器等
+        if (!file) {
+            alert('请选择一个图片文件进行上传');
+            return;
+        }
+
+        // 使用XMLHttpRequest对象创建异步请求
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/admin/upload', true);
+
+        // 文件上传时的进度事件监听器
+        xhr.upload.addEventListener('progress', function(event) {
+            if (event.lengthComputable) {
+                const percentComplete = (event.loaded / event.total) * 100;
+                document.getElementById('progress-container').style.display = 'block';
+                document.getElementById('progress-bar').value = percentComplete;
+                document.getElementById('progress-text').textContent = `${percentComplete.toFixed(0)}% 完成`;
+            }
+        });
+
+        // 文件上传完成后的事件监听器
+        xhr.addEventListener('load', function() {
+            if (xhr.status === 200) {
+                document.getElementById('upload-result').textContent = '图片上传成功!';
+                document.getElementById('upload-result').style.color = 'green';
+                const categoryId = document.getElementById('category-id').value;
+                const title = document.getElementById('title').value;
+                const sellPoint = document.getElementById('sell-point').value;
+                const price = document.getElementById('price').value;
+                const num = document.getElementById('num').value;
+
+                console.log(categoryId);
+                console.log(title);
+                console.log(sellPoint);
+                console.log(price);
+                console.log(num);
+                $.ajax({
+                    url:"/products/addProduct",
+                    type:"POST",
+                    data:{categoryId:categoryId,title:title,sellPoint:sellPoint,price:price,num:num},
+                    dataType:"JSON",
+                    success:function (json){
+                        if(json.state == 200){
+                            alert("上传商品成功!");
+                            window.location.reload();
+                        }else {
+                            alert("上传商品失败!");
+                        }
+                    },
+                    error:function (xhr){
+                        alert("未知错误!" + xhr.state);
+                    }
+                })
+
+
+            } else {
+                document.getElementById('upload-result').textContent = '图片上传失败!';
+                document.getElementById('upload-result').style.color = 'red';
+            }
+        });
+
+        // 创建FormData对象
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // 发送请求
+        xhr.send(formData);
     }
+
 
     // 删除订单处理函数
     function handleOrderDeletion(button) {
@@ -515,6 +587,7 @@
         }
     }
 
+    // 确认发货处理函数
     function handleOrderConfirm(button) {
         if (confirm('是否发货？')) {
             const row = button.closest('tr');
@@ -523,6 +596,198 @@
             // 这里可以添加更多的逻辑，例如发送请求到服务器等
         }
     }
+
+    // 获取未发货订单
+    function getNotShippedOrders() {
+        $.ajax({
+            url: "/orders/getordersBySellerId", // 替换为实际的接口地址
+            type: "GET",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    let list = json.data;
+                    $("#sub-content-ss").empty();
+                    console.log(list);
+                    // private String oid;// '订单中的商品记录的id',
+                    // private String pid ;//'商品的id',
+                    // private String uid; //用户id
+                    // private String username; //用户名
+                    // private String mid; //商家id
+                    // private String address; //创建地址
+                    // private String title ;//'商品标题',
+                    // private String image ;// '商品图片',
+                    // private  int price ;//商品价格',
+                    // private int num;//'购买数量',
+                    // private int state; //0 -> 未收货、1-> 收货成功
+                    // private String comment; //评价
+                    //
+                    for(let i = 0;i < list.length;i++){
+                        if(list[i].state != 2)continue;
+                        let tr = '<tr>\n' +
+                            '<td>#{oid}</td>\n' +
+                            '<td>#{title}</td>\n' +
+                            '<td>#{username}</td>\n' +
+                            '<td>#{num}</td>\n' +
+                            '<td><button class="ship-btn-delete" onclick="deleteOrder(this,#{oid})">删除</button></td>\n' +
+                            '<td><button class="ship-btn-confirm" onclick="confirmOrder(this,#{oid})">发货确认</button></td>\n' +
+                            '</tr>';
+                        tr = tr.replace(/#{oid}/g, list[i].oid);
+                        tr = tr.replace(/#{title}/g, list[i].title);
+                        tr = tr.replace(/#{username}/g, list[i].username);
+                        tr = tr.replace(/#{num}/g, list[i].num);
+                        $("#sub-content-ss").append(tr);
+                    }
+
+                } else {
+                    alert("获取未发货订单失败: " + json.message);
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    function deleteOrder(button,oid){
+
+        if (confirm('确定要删除此订单吗？')) {
+            const row = button.closest('tr');
+            $.ajax({
+                url:"/orders/delorder",
+                type:"POST",
+                data:{oid:oid},
+                dataType:"JSON",
+                success:function (json){
+                    if(json.state == 200){
+                        alert("订单删除成功!");
+                        row.remove();
+                    }else {
+                        alert("订单删除失败!");
+                    }
+                },
+                error:function (xhr){
+                    alert("未知错误!" + xhr.state);
+                }
+            })
+        }
+
+    }
+
+    function confirmOrder(button,oid){
+        if (confirm('是否发货？')) {
+            const row = button.closest('tr');
+            $.ajax({
+                url: "/orders/updatestate",
+                type: "POST",
+                data: { oid: oid }, // 将 oid 发送给后端
+                dataType: "JSON",                   // 预期返回的数据类型为 JSON
+                success: function (json) {
+                    if (json.state == 200) {
+                        alert("已发货");
+                        row.remove();
+
+                    } else {
+                        alert("发货失败: " + json.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert("未知错误失败: " + xhr.status + " " + xhr.statusText);
+                }
+            })
+        }
+    }
+
+
+    // 获取已发货订单
+    function getShippedOrders() {
+        $.ajax({
+            url: "/orders/getordersBySellerId", // 替换为实际的接口地址
+            type: "GET",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    $.ajax({
+                        url: "/orders/getordersBySellerId", // 替换为实际的接口地址
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(json) {
+                            if (json.state === 200) {
+                                let list = json.data;
+                                $("#sub-content-ssss").empty();
+                                console.log(list);
+                                for(let i = 0;i < list.length;i++){
+                                    if(list[i].state != 0)continue;
+                                    let tr = '<tr>\n' +
+                                        '<td>#{oid}</td>\n' +
+                                        '<td>#{title}</td>\n' +
+                                        '<td>#{username}</td>\n' +
+                                        '<td>#{num}</td>\n' +
+                                        '</tr>';
+                                    tr = tr.replace(/#{oid}/g, list[i].oid);
+                                    tr = tr.replace(/#{title}/g, list[i].title);
+                                    tr = tr.replace(/#{username}/g, list[i].username);
+                                    tr = tr.replace(/#{num}/g, list[i].num);
+                                    $("#sub-content-ssss").append(tr);
+                                }
+
+                            } else {
+                                alert("获取未发货订单失败: " + json.message);
+                            }
+                        },
+                        error: function(xhr) {
+                            alert("产生未知的错误!" + xhr.status);
+                        }
+                    });
+
+
+                } else {
+                    alert("获取已发货订单失败: " + json.message);
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 获取已收货订单
+    function getReceivedOrders() {
+        $.ajax({
+            url: "/orders/getordersBySellerId", // 替换为实际的接口地址
+            type: "GET",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    let list = json.data;
+                    $("#sub-content-ssssss").empty();
+                    console.log(list);
+                    for(let i = 0;i < list.length;i++){
+                        if(list[i].state != 1)continue;
+                        let tr = '<tr>\n' +
+                            '<td>#{oid}</td>\n' +
+                            '<td>#{title}</td>\n' +
+                            '<td>#{username}</td>\n' +
+                            '<td>#{num}</td>\n' +
+                            '</tr>';
+                        tr = tr.replace(/#{oid}/g, list[i].oid);
+                        tr = tr.replace(/#{title}/g, list[i].title);
+                        tr = tr.replace(/#{username}/g, list[i].username);
+                        tr = tr.replace(/#{num}/g, list[i].num);
+                        $("#sub-content-ssssss").append(tr);
+                    }
+
+
+                } else {
+                    alert("获取已收货订单失败: " + json.message);
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+
 
     // 初始化所有功能
     function initAll() {
