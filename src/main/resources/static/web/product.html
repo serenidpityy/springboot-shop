@@ -96,19 +96,19 @@
 			<div class="col-md-offset-1 col-md-10">
 				<div class="col-md-6">
 					<div data="1" class="img-big move-img col-md-12">
-						<img id="product-image-1-big" src="../images/portal/11DELLran7000R1605Ssilvery/1_big.png" class="img-responsive" />
+						<img id="product-image-1-big" src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" style="width: 460px; height: 360px;" />
 					</div>
 					<div data="2" class="img-big move-img col-md-12">
-						<img id="product-image-2-big" src="../images/portal/11DELLran7000R1605Ssilvery/2_big.png" class="img-responsive" />
+						<img id="product-image-2-big" src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" style="width: 460px; height: 360px;" />
 					</div>
 					<div data="3" class="img-big move-img col-md-12">
-						<img id="product-image-3-big" src="../images/portal/11DELLran7000R1605Ssilvery/3_big.png" class="img-responsive" />
+						<img id="product-image-3-big" src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" style="width: 460px; height: 360px;" />
 					</div>
 					<div data="4" class="img-big move-img col-md-12">
-						<img id="product-image-4-big" src="../images/portal/11DELLran7000R1605Ssilvery/4_big.png" class="img-responsive" />
+						<img id="product-image-4-big" src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" style="width: 460px; height: 360px;" />
 					</div>
 					<div data="5" class="img-big move-img col-md-12">
-						<img id="product-image-5-big" src="../images/portal/11DELLran7000R1605Ssilvery/5_big.png" class="img-responsive" />
+						<img id="product-image-5-big" src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" style="width: 460px; height: 360px;" />
 					</div>
 					<div data="1" class="col-md-2 img-small">
 						<img id="product-image-1" src="../images/portal/11DELLran7000R1605Ssilvery/1.jpg" class="img-responsive" />
@@ -313,8 +313,8 @@
 
 
 							for (let i = 1; i <= 5; i++) {
-								$("#product-image-" + i + "-big").attr("src", ".." + json.data.image + i + "_big.png");
-								$("#product-image-" + i).attr("src", ".." + json.data.image + i + ".jpg");
+								$("#product-image-" + i + "-big").attr("src", ".." + json.data.image);
+								$("#product-image-" + i).attr("src", ".." + json.data.image);
 							}
 						} else if (json.state == 406) { // 商品数据不存在的异常
 							location.href = "index.html";

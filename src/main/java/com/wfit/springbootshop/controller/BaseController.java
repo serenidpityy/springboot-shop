@@ -69,4 +69,62 @@ public class BaseController {
         session.setAttribute("password",password);
     }
 
+
+
+
+
+
+
+
+    protected final String getselleridFromSession(HttpSession session){
+        return (String)session.getAttribute("id");
+    }
+
+    public final String getsellernameFromSession(HttpSession session){
+        return (String)session.getAttribute("sellername");
+    }
+
+    protected final String getsellerpasswordFromSession(HttpSession session){
+        return (String)session.getAttribute("password");
+    }
+
+    protected final void setselleridFromSession(HttpSession session,String sellername){
+        session.setAttribute("sellername",sellername);
+    }
+
+    protected final void setsellernameFromSession(HttpSession session,String sellername){
+        session.setAttribute("sellername",sellername);
+    }
+
+    protected final void setsellerpasswordFromSession(HttpSession session,String password){
+        session.setAttribute("password",password);
+    }
+
+
+
+    protected final String getadidFromSession(HttpSession session){
+        return (String)session.getAttribute("id");
+    }
+
+    public final String getadnameFromSession(HttpSession session){
+        return (String)session.getAttribute("adname");
+    }
+
+    protected final String getadpasswordFromSession(HttpSession session){
+        return (String)session.getAttribute("password");
+    }
+
+    protected final void setadidFromSession(HttpSession session,String adname){
+        session.setAttribute("adname",adname);
+    }
+
+    protected final void setadnameFromSession(HttpSession session,String adname){
+        session.setAttribute("adname",adname);
+    }
+
+    protected final void setadpasswordFromSession(HttpSession session,String password){
+        session.setAttribute("password",password);
+    }
+
+
 }
