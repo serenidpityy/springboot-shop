@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit" />
+    <title>电脑商城</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/top.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员面板</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #3a506b;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: #34495e;
+            border-left-color: #3498db;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+
+        .content-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .content-body {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<!-- 左侧菜单 -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>管理员系统</h3>
+    </div>
+    <div class="sidebar-menu">
+        <div class="menu-item active" data-page="modify-password">修改密码</div>
+        <div class="menu-item" data-page="personal-info">个人资料</div>
+        <div class="menu-item" data-page="seller-info">商家信息</div>
+        <div class="menu-item" data-page="user-info">用户信息</div>
+        <div class="menu-item" data-page="product-info">商品信息</div>
+        <div class="menu-item" data-page="order-info">订单信息</div>
+    </div>
+</div>
+
+<!-- 右侧内容区域 -->
+<div class="content">
+    <div class="content-header">
+        <h2 id="page-title">修改密码</h2>
+    </div>
+
+    <!-- 修改密码页面 -->
+    <div class="page-content active" id="modify-password">
+        <div class="content-body">
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="old-password">原密码：</label>
+                    <input type="text" id="old-password" name="old-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">新密码：</label>
+                    <input type="text" id="new-password" name="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">确认新密码：</label>
+                    <input type="text" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit">保存修改</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 个人资料页面 -->
+    <div class="page-content" id="personal-info">
+        <div class="content-body">
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="admin-name">名字：</label>
+                    <input type="text" id="admin-name" name="admin-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-email">邮箱：</label>
+                    <input type="text" id="admin-email" name="admin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-phone">电话：</label>
+                    <input type="text" id="admin-phone" name="admin-phone" required>
+                </div>
+                <div class="form-group">
+                    <label>性别：</label>
+                    <select id="seller-gender" name="seller-gender">
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                </div>
+                <button type="submit">保存资料</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 商家信息页面 -->
+    <div class="page-content" id="seller-info">
+        <div class="content-body">
+            <table id="sellers-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商家名称</th>
+                    <th>联系方式</th>
+                    <th>邮箱</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="seller-message">
+                <tr>
+                    <td>1</td>
+                    <td>科技先锋</td>
+                    <td>13888888888</td>
+                    <td>contact@techleader.com</td>
+                    <td><button class="ship-btn" onclick="editSeller(this)">删除</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 用户信息页面 -->
+    <!-- 用户信息页面 -->
+    <div class="page-content" id="user-info">
+        <div class="content-body">
+            <table id="users-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>联系方式</th>
+                    <th>邮箱</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="user-message">
+                <tr>
+                    <td>1001</td>
+                    <td>张三</td>
+                    <td>13800138001</td>
+                    <td>zhangsan@example.com</td>
+                    <td><button class="ship-btn" onclick="editUser(this)">删除</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 商品信息页面 -->
+    <div class="page-content" id="product-info">
+        <div class="content-body">
+            <table id="products-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名称</th>
+                    <th>商品卖点</th>
+                    <th>价格</th>
+                    <th>库存</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="product-message">
+                <tr>
+                    <td>2001</td>
+                    <td>智能手机 Pro</td>
+                    <td>好吃</td>
+                    <td>3999</td>
+                    <td>100</td>
+                    <td><button class="ship-btn" onclick="editProduct(this)">删除</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 订单信息页面 -->
+    <div class="page-content" id="order-info">
+        <div class="content-body">
+            <table id="orders-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户</th>
+                    <th>商品</th>
+                    <th>数量</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="order-message">
+                <tr>
+                    <td>3001</td>
+                    <td>张三</td>
+                    <td>智能手机 Pro</td>
+                    <td>1</td>
+                    <td>已发货</td>
+                    <td><button class="ship-btn" onclick="updateOrderStatus(this)">删除</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 主菜单切换逻辑
+    function initMainMenu() {
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // 清除所有菜单项和页面的active状态
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+
+                // 设置当前菜单项为active
+                this.classList.add('active');
+
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                document.getElementById('page-title').textContent = this.textContent;
+
+                // 调用对应的接口函数加载数据
+                if (pageId === 'seller-info') {
+                    loadSellers();
+                } else if (pageId === 'user-info') {
+                    loadUsers();
+                } else if (pageId === 'product-info') {
+                    loadProducts();
+                } else if (pageId === 'order-info') {
+                    loadOrders();
+                }
+            });
+        });
+    }
+
+    // 表单提交处理逻辑
+    function initForms() {
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handlePasswordFormSubmit();
+        });
+
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleProfileFormSubmit();
+        });
+    }
+
+    // 密码表单提交处理函数
+    function handlePasswordFormSubmit() {
+        const oldPassword = document.getElementById('old-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (newPassword !== confirmPassword) {
+            alert('新密码和确认密码不一致！');
+            return;
+        }
+
+        $.ajax({
+            url: "/ad/updatePassword",
+            type: "POST",
+            data: { oldPassword: oldPassword, newPassword: newPassword },
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state == 200) alert("密码修改成功");
+                else if (json.state == 201) alert("原密码错误");
+                else alert("密码修改失败");
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 个人资料表单提交处理函数
+    function handleProfileFormSubmit() {
+        const name = document.getElementById('admin-name').value;
+        const email = document.getElementById('admin-email').value;
+        const phone = document.getElementById('admin-phone').value;
+        const gender = document.getElementById('seller-gender').value;
+        var genders;
+        if (gender == "male") genders = 1;
+        else genders = 0;
+
+        $.ajax({
+            url: "/ad/uploadInfo",
+            type: "POST",
+            data: { name: name, phone: phone, email: email, gender: genders },
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state == 200) alert("信息修改成功");
+                else alert("信息修改失败");
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    //editSeller、editUser、editProduct、updateOrderStatus
+    function editSeller(button,id){
+
+        if (confirm('确定要删除该商家吗？')) {
+            const row = button.closest('tr');
+            //delseller
+            $.ajax({
+                url: "/ad/delseller",
+                type: "POST",
+                data: { id:id },
+                dataType: "JSON",
+                success: function(json) {
+                    if (json.state == 200) alert("信息删除成功");
+                    else alert("信息删除失败");
+                },
+                error: function(xhr) {
+                    alert("产生未知的错误!" + xhr.status);
+                }
+            });
+            row.remove();
+        }
+    }
+
+    function editUser(button,id){
+
+        if (confirm('确定要删除该用户吗？')) {
+            const row = button.closest('tr');
+            //delseller
+            $.ajax({
+                url: "/ad/deluser",
+                type: "POST",
+                data: { id:id },
+                dataType: "JSON",
+                success: function(json) {
+                    if (json.state == 200) alert("信息删除成功");
+                    else alert("信息删除失败");
+                },
+                error: function(xhr) {
+                    alert("产生未知的错误!" + xhr.status);
+                }
+            });
+            row.remove();
+        }
+    }
+
+
+    function editProduct(button,id){
+
+        if (confirm('确定要删除该商品吗？')) {
+            const row = button.closest('tr');
+            //delproduct
+            $.ajax({
+                url: "/ad/delproduct",
+                type: "POST",
+                data: { id:id },
+                dataType: "JSON",
+                success: function(json) {
+                    if (json.state == 200) alert("信息删除成功");
+                    else alert("信息删除失败");
+                },
+                error: function(xhr) {
+                    alert("产生未知的错误!" + xhr.status);
+                }
+            });
+            row.remove();
+        }
+    }
+
+    function updateOrderStatus(button,oid){
+
+        if (confirm('确定要删除该订单吗？')) {
+            const row = button.closest('tr');
+            //delproduct
+            $.ajax({
+                url: "/ad/delorder",
+                type: "POST",
+                data: { oid:oid },
+                dataType: "JSON",
+                success: function(json) {
+                    if (json.state == 200) alert("信息删除成功");
+                    else alert("信息删除失败");
+                },
+                error: function(xhr) {
+                    alert("产生未知的错误!" + xhr.status);
+                }
+            });
+            row.remove();
+        }
+    }
+
+
+
+
+
+    // 加载商家信息
+    function loadSellers() {
+
+        $.ajax({
+            url: "/ad/getseller",
+            type: "POST",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    //private String id;// --AUTO_INCREMENT '商家id',
+                    // private String sellername;//VARCHAR(20) NOT NULL UNIQUE, --'商家名',
+                    // private String password;//CHAR(32) //NOT NULL, -- '密码',
+                    // private String phone; //VARCHAR(20)  //,-- '电话号码',
+                    // private String email; //VARCHAR(30)  //,-- '电子邮箱',
+                    // private int gender;//,-- '性别:0-女，1-男' 2-未知,
+                    let list = json.data;
+                    $("#seller-message").empty();
+                    for(let i = 0;i < list.length;i++){
+                        let tr = '<tr>\n' +
+                            '<td>#{id}</td>\n' +
+                            '<td>#{sellername}</td>\n' +
+                            '<td>#{phone}</td>\n' +
+                            '<td>#{email}</td>\n' +
+                            '<td><button class="ship-btn" onclick="editSeller(this,#{id})">删除</button></td>\n' +
+                            '</tr>';
+
+
+                        tr = tr.replace(/#{id}/g, list[i].id);
+                        tr = tr.replace(/#{sellername}/g, list[i].sellername);
+                        tr = tr.replace(/#{phone}/g, list[i].phone);
+                        tr = tr.replace(/#{email}/g, list[i].email);
+                        $("#seller-message").append(tr);
+                    }
+
+
+                } else {
+                    alert("加载商家信息失败");
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 加载用户信息
+    function loadUsers() {
+
+        $.ajax({
+            url: "/ad/getuser",
+            type: "POST",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    // private String id;// --AUTO_INCREMENT '用户id',
+                    // private String username;//VARCHAR(20) NOT NULL UNIQUE, --'用户名',
+                    // private String password;//CHAR(32) //NOT NULL, -- '密码',
+                    // private String phone; //VARCHAR(20)  //,-- '电话号码',
+                    // private String email; //VARCHAR(30)  //,-- '电子邮箱',
+                    // private int gender;//,-- '性别:0-女，1-男' 2-未知,
+                    // private int member;
+                    let list = json.data;
+                    $("#user-message").empty();
+                    for(let i = 0;i < list.length;i++){
+                        let tr = '<tr>\n' +
+                            '<td>#{id}</td>\n' +
+                            '<td>#{username}</td>\n' +
+                            '<td>#{phone}</td>\n' +
+                            '<td>#{email}</td>\n' +
+                            '<td><button class="ship-btn" onclick="editUser(this,#{id})">删除</button></td>\n' +
+                            '</tr>';
+
+
+                        tr = tr.replace(/#{id}/g, list[i].id);
+                        tr = tr.replace(/#{username}/g, list[i].username);
+                        tr = tr.replace(/#{phone}/g, list[i].phone);
+                        tr = tr.replace(/#{email}/g, list[i].email);
+                        $("#user-message").append(tr);
+                    }
+
+
+                } else {
+                    alert("加载商家信息失败");
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 加载商品信息
+    function loadProducts() {
+        $.ajax({
+            url: "/ad/getproduct",
+            type: "POST",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    // private String id; // 商品id
+                    // private String categoryId; // 分类id
+                    // private String merchantid; // 商家id
+                    // private String title; // 商品标题
+                    // private String sellPoint; // 商品卖点描述
+                    // private Integer price; // 商品单价
+                    // private int num; // 库存数量
+                    // private String image; // 图片路径
+                    // private int status; // 商品状态 1：上架 2：下架 3：删除
+                    // private int priority; // 显示优先级
+                    let list = json.data;
+                    $("#product-message").empty();
+                    for(let i = 0;i < list.length;i++){
+                        let tr = '<tr>\n' +
+                            '<td>#{id}</td>\n' +
+                            '<td>#{title} Pro</td>\n' +
+                            '<td>#{sellPoint}</td>\n' +
+                            '<td>#{price}</td>\n' +
+                            '<td>#{num}</td>\n' +
+                            '<td>\n' +
+                            '<button className="ship-btn" onClick="editProduct(this,#{id})">删除</button>\n' +
+                            '</td>\n' +
+                            '</tr>';
+
+
+                        tr = tr.replace(/#{id}/g, list[i].id);
+                        tr = tr.replace(/#{title}/g, list[i].title);
+                        tr = tr.replace(/#{sellPoint}/g, list[i].sellPoint);
+                        tr = tr.replace(/#{price}/g, list[i].price);
+
+                        tr = tr.replace(/#{num}/g, list[i].num);
+                        $("#product-message").append(tr);
+                    }
+
+
+                } else {
+                    alert("加载商家信息失败");
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 加载订单信息
+    function loadOrders() {
+
+        $.ajax({
+            url: "/ad/getorder",
+            type: "POST",
+            dataType: "JSON",
+            success: function(json) {
+                if (json.state === 200) {
+                    // private String oid;// '订单中的商品记录的id',
+                    // private String pid ;//'商品的id',
+                    // private String uid; //用户id
+                    // private String username; //收货人
+                    // private String mid; //商家id
+                    // private String address; //创建地址
+                    // private String title ;//'商品标题',
+                    // private String image ;// '商品图片',
+                    // private  int price ;//商品价格',
+                    // private int num;//'购买数量',
+                    // private int state; //0 -> 未收货、1-> 收货成功
+                    // private String comment; //评价
+                    let list = json.data;
+                    $("#order-message").empty();
+                    for(let i = 0;i < list.length;i++){
+                        let tr = '<tr>\n' +
+                            '<td>#{oid}</td>\n' +
+                            '<td>#{username}</td>\n' +
+                            '<td>#{title} Pro</td>\n' +
+                            '<td>#{num}</td>\n' +
+                            '<td>#{state}</td>\n' +
+                            '<td><button class="ship-btn" onclick="updateOrderStatus(this,#{oid})">删除</button></td>\n' +
+                            '</tr>';
+
+
+                        tr = tr.replace(/#{oid}/g, list[i].oid);
+                        tr = tr.replace(/#{username}/g, list[i].username);
+                        tr = tr.replace(/#{title}/g, list[i].title);
+                        tr = tr.replace(/#{num}/g, list[i].num);
+                        //0 -> 未收货 1 -> 已收货 2-> 未发货
+                        if(list[i].state == 0)tr = tr.replace(/#{state}/g, "未收货");
+                        else if(list[i].state == 1)tr = tr.replace(/#{state}/g, "已收货");
+                        else tr = tr.replace(/#{state}/g, "未发货");
+
+
+
+                        tr = tr.replace(/#{num}/g, list[i].num);
+                        $("#order-message").append(tr);
+                    }
+
+
+                } else {
+                    alert("加载商家信息失败");
+                }
+            },
+            error: function(xhr) {
+                alert("产生未知的错误!" + xhr.status);
+            }
+        });
+    }
+
+    // 初始化所有功能
+    function initAll() {
+        initMainMenu();
+        initForms();
+    }
+
+    // 页面加载完成后初始化所有功能
+    document.addEventListener('DOMContentLoaded', initAll);
+</script>
+</body>
+</html>
