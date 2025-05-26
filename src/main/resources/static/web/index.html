@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<!--360浏览器H5兼容设置-->
 		<meta name="renderer" content="webkit" />
-		<title>电脑商城</title>
+		<title>Summer Pocket商城</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--导入核心文件-->
 		<script src="../bootstrap3/js/holder.js"></script>
@@ -25,7 +25,7 @@
 	<body>
 		<!--头部-->
 		<header class="header">
-			<!--电脑商城logo-->
+			<!--Summer Pocket商城logo-->
 			<div class="row">
 				<div class="col-md-3">
 					<a href="index.html">
@@ -35,7 +35,7 @@
 				<!--快捷选项-->
 				<div class="col-md-9 top-item">
 					<ul class="list-inline pull-right">
-						<li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;收藏</a></li>
+						<li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;人物介绍</a></li>
 						<li class="li-split">|</li>
 						<li><a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;订单</a></li>
 						<li class="li-split">|</li>
@@ -70,11 +70,11 @@
 						<a href="#"></a>
 					</li>
 					<li class="active"><a href="index.html"><span class="fa fa-home"></span></a></li>
-					<li><a href="#">秒杀</a></li>
-					<li><a href="#">优惠券</a></li>
-					<li><a href="#">电脑VIP</a></li>
-					<li><a href="#">外卖</a></li>
-					<li><a href="#">超市</a></li>
+					<li><a href="#">背景介绍</a></li>
+					<li><a href="#">人物介绍</a></li>
+					<li><a href="#">图片欣赏</a></li>
+					<li><a href="#">音乐欣赏</a></li>
+					<li><a href="#">资源获取</a></li>
 				</ul>
 			</div>
 			<div class="col-md-6">
@@ -90,46 +90,15 @@
 		<!--导航结束-->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-2" id="indexMenu">
-					<ul class="index-menu">
-					</ul>
-					<div id="showIndex">
-						<ul class="second-menu">
-							<li class="second-menu-li">####</li>
-						</ul>
-					</div>
-					<div id="showSecond">
-						<ul class="third-menu">
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-10">
+				<div class="col-md-12">
 					<div id="myCarousel" class="carousel slide">
-						<!-- 轮播（Carousel）指标 -->
+						<!-- 轮播（Carousel）指示器 -->
 						<ol class="carousel-indicators">
-							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-							<li data-target="#myCarousel" data-slide-to="1"></li>
-							<li data-target="#myCarousel" data-slide-to="2"></li>
-							<li data-target="#myCarousel" data-slide-to="3"></li>
-							<li data-target="#myCarousel" data-slide-to="4"></li>
+							<!-- JavaScript 循环生成的指示器 -->
 						</ol>
 						<!-- 轮播（Carousel）项目 -->
 						<div class="carousel-inner" align="center">
-							<div class="item active">
-								<img src="../images/index/index_banner1.png">
-							</div>
-							<div class="item">
-								<img src="../images/index/index_banner2.png">
-							</div>
-							<div class="item">
-								<img src="../images/index/index_banner3.png">
-							</div>
-							<div class="item">
-								<img src="../images/index/index_banner4.png">
-							</div>
-							<div class="item">
-								<img src="../images/index/index_banner5.png">
-							</div>
+							<!-- JavaScript 循环生成的轮播项目 -->
 						</div>
 						<!-- 轮播（Carousel）导航 -->
 						<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -141,6 +110,62 @@
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
+
+					<script>
+
+
+						// 定义图片路径数组
+						const imgPaths = [
+							'../images/characterpicutre/index_banner1.png',
+							'../images/characterpicutre/index_banner2.png',
+							'../images/characterpicutre/index_banner3.png',
+							'../images/characterpicutre/index_banner4.png',
+							'../images/characterpicutre/index_banner5.png',
+							'../images/characterpicutre/index_banner6.png',
+							'../images/characterpicutre/index_banner7.png',
+							'../images/characterpicutre/index_banner8.png',
+
+						];
+						// 定义图片数量
+						const n = imgPaths.length;
+
+						// 获取指示器和轮播容器元素
+						const indicators = document.querySelector('.carousel-indicators');
+						const carouselInner = document.querySelector('.carousel-inner');
+
+						// 循环生成指示器
+						for (let i = 0; i < n; i++) {
+							// 创建指示器 li
+							const indicator = document.createElement('li');
+							indicator.dataset.target = '#myCarousel';
+							indicator.dataset.slideTo = i;
+							// 只有第一个指示器添加 active 类
+							if (i === 0) {
+								indicator.className = 'active';
+							}
+							// 将指示器添加到容器中
+							indicators.appendChild(indicator);
+						}
+
+						// 循环生成轮播项目
+						for (let i = 0; i < n; i++) {
+							// 创建轮播项目 div
+							const itemDiv = document.createElement('div');
+							// 只有第一个轮播项目添加 active 类
+							if (i === 0) {
+								itemDiv.className = 'item active';
+							} else {
+								itemDiv.className = 'item';
+							}
+							// 创建 img 元素
+							const img = document.createElement('img');
+							img.src = imgPaths[i];
+							// 将 img 添加到轮播项目中
+							itemDiv.appendChild(img);
+							// 将轮播项目添加到容器中
+							carouselInner.appendChild(itemDiv);
+						}
+					</script>
 				</div>
 			</div>
 			
@@ -152,22 +177,26 @@
 							<p class="panel-title">热销排行</p>
 						</div>
 						<div id="hot-list" class="panel-body panel-item">
-							<div class="col-md-12">
+							<!-- 商品1 -->
+							<div class="col-md-6">
 								<div class="col-md-7 text-row-2"><a href="product.html">广博(GuangBo)10本装40张A5牛皮纸记事本子日记本办公软抄本GBR0731</a></div>
 								<div class="col-md-2">¥23</div>
 								<div class="col-md-3"><img src="../images/portal/00001/collect.png" class="img-responsive" /></div>
 							</div>
-							<div class="col-md-12">
+							<!-- 商品2 -->
+							<div class="col-md-6">
 								<div class="col-md-7 text-row-2"><a href="product.html">齐心（COMIX）C5902 A5优品商务笔记本子记事本日记本122张</a></div>
 								<div class="col-md-2">¥18</div>
 								<div class="col-md-3"><img src="../images/portal/00005/collect.png" class="img-responsive" /></div>
 							</div>
-							<div class="col-md-12">
+							<!-- 商品3 -->
+							<div class="col-md-6">
 								<div class="col-md-7 text-row-2"><a href="product.html">广博(GuangBo)皮面日程本子 计划记事本效率手册米色FB60322</a></div>
 								<div class="col-md-2">¥28</div>
 								<div class="col-md-3"><img src="../images/portal/00002/collect.png" class="img-responsive" /></div>
 							</div>
-							<div class="col-md-12">
+							<!-- 商品4 -->
+							<div class="col-md-6">
 								<div class="col-md-7 text-row-2"><a href="product.html">戴尔Dell 燃700R1605银色</a></div>
 								<div class="col-md-2">¥3799</div>
 								<div class="col-md-3"><img src="../images/portal/11DELLran7000R1605Ssilvery/collect.png" class="img-responsive" /></div>
@@ -179,85 +208,24 @@
 		</div>
 		<!--页脚开始-->
 		<footer class="footer">
-			<!-- 品质保障，私人定制等-->
+			<!-- 图标-->
 			<div class="text-center rights container">
 				<div class="col-md-offset-2 col-md-2">
-					<span class="fa fa-thumbs-o-up"></span>
-					<p>品质保障</p>
+					<img src="../images/index/butterfly.png" alt="品质保障图标" width="150" height="100">
+					<p>七影蝶</p>
 				</div>
 				<div class="col-md-2">
-					<span class="fa fa-address-card-o"></span>
-					<p>私人订制</p>
+					<img src="../images/index/cat.png" alt="私人订制图标" width="100" height="100">
+					<p>海盗胡子猫</p>
 				</div>
 				<div class="col-md-2">
-					<span class="fa fa-graduation-cap"></span>
-					<p>学生特供</p>
+					<img src="../images/index/toys.png" alt="学生特供图标" width="150" height="100">
+					<p>玩偶</p>
 				</div>
 				<div class="col-md-2">
-					<span class="fa fa-bitcoin"></span>
-					<p>专属特权</p>
+					<img src="../images/index/Inari_1000.png" alt="专属特权图标" width="100" height="100">
+					<p>稻荷</p>
 				</div>
-			</div>
-			<!--联系我们、下载客户端等-->
-			<div class="container beforeBottom">
-				<div class="col-md-offset-1 col-md-3">
-					<div><img src="../images/index/stumalllogo.png" alt="" class="footLogo" /></div>
-					<div><img src="../images/index/footerFont.png" alt="" /></div>
-				</div>
-				<div class="col-md-4 callus text-center">
-					<div class="col-md-4">
-						<ul>
-							<li>
-								<a href="#">
-									<p>买家帮助</p>
-								</a>
-							</li>
-							<li><a href="#">新手指南</a></li>
-							<li><a href="#">服务保障</a></li>
-							<li><a href="#">常见问题</a></li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<ul>
-							<li>
-								<a href="#">
-									<p>商家帮助</p>
-								</a>
-							</li>
-							<li><a href="#">商家入驻</a></li>
-							<li><a href="#">商家后台</a></li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<ul>
-							<li>
-								<a href="#">
-									<p>关于我们</p>
-								</a>
-							</li>
-							<li><a href="#">关于圆心</a></li>
-							<li><a href="#">联系我们</a></li>
-							<li>
-								<span class="fa fa-wechat"></span>
-								<span class="fa fa-weibo"></span>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="col-md-5">
-						<p>电脑商城客户端</p>
-						<img src="../images/index/ios.png" class="lf">
-						<img src="../images/index/android.png" alt="" class="lf" />
-					</div>
-					<div class="col-md-6">
-						<img src="../images/index/erweima.png">
-					</div>
-				</div>
-			</div>
-			<!-- 页面底部-备案号 #footer -->
-			<div class="col-md-12 text-center bottom">
-				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有
 			</div>
 		</footer>
 		<!--页脚结束-->
@@ -277,7 +245,16 @@
 						console.log("count=" + list.length);
 						for (let i = 0; i < list.length; i++) {
 							console.log(list[i].title);
-							let html = '<div class="col-md-12">'
+							//<div class="col-md-6">
+						// 	<div className="col-md-7 text-row-2"><a
+						// 			href="product.html">广博(GuangBo)10本装40张A5牛皮纸记事本子日记本办公软抄本GBR0731</a>
+						// 	</div>
+						// 	<div className="col-md-2">¥23</div>
+						// 	<div className="col-md-3"><img src="../images/portal/00001/collect.png"
+						// 								   className="img-responsive"/></div>
+						// </div>
+
+							let html = '<div class="col-md-6">'
 									+ '<div class="col-md-7 text-row-2"><a href="product.html?id=#{id}">#{title}</a></div>'
 									+ '<div class="col-md-2">¥#{price}</div>'
 									+ '<div class="col-md-3"><img src="..#{image}" class="img-responsive" /></div>'
