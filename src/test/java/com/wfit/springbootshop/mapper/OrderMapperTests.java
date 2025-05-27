@@ -115,4 +115,18 @@ public class OrderMapperTests {
     }
 
 
+    @Test
+    public void getOrdercommetsByPid(){
+        try{
+            List<Order>list = orderService.getOrdercommetsByPid("10000036");
+            for(Order order:list){
+                System.out.println(order);
+            }
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+        }
+    }
+
 }
