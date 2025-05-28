@@ -21,8 +21,92 @@
 		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
 		<link rel="stylesheet" type="text/css" href="../css/reg.css" />
 		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<style>
+			.play-button {
+				width: 50px;
+				height: 50px;
+				background-image: url('../images/icon/summer pocket.png');
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+				cursor: pointer;
+				border: none;
+				background-color: transparent;
+				transition: transform 0.1s linear;
+			}
+		</style>
+
 	</head>
 	<body>
+
+	<button id="playButton" class="play-button"></button>
+	<audio id="audioPlayer" src="../music/summer pocket.mp3" loop></audio>
+
+	<script>
+		const audioPlayer = document.getElementById('audioPlayer');
+		const playButton = document.getElementById('playButton');
+		let isPlaying = false;
+		let animationFrameId;
+		const ROTATION_DURATION = 2; // 每2秒完成一圈旋转
+
+		// 更新旋转角度函数（顺时针）
+		function updateRotation() {
+			// 通过正向累加角度实现顺时针旋转
+			const rotation = (audioPlayer.currentTime / ROTATION_DURATION) * 360;
+			playButton.style.transform = `rotate(${rotation}deg)`;
+			if (isPlaying) {
+				animationFrameId = requestAnimationFrame(updateRotation);
+			}
+		}
+
+		// 播放事件监听
+		audioPlayer.addEventListener('play', () => {
+			isPlaying = true;
+			updateRotation();
+		});
+
+		// 暂停事件监听
+		audioPlayer.addEventListener('pause', () => {
+			isPlaying = false;
+			cancelAnimationFrame(animationFrameId);
+		});
+
+		// 页面加载初始化
+		window.addEventListener('load', () => {
+			audioPlayer.currentTime = 0;
+			// 尝试播放音频
+			audioPlayer.play()
+					.then(() => {
+						isPlaying = true;
+
+					})
+					.catch(error => {
+						// 如果浏览器不允许自动播放，提示用户需要手动点击
+						console.error('播放失败:', error);
+					});
+		});
+
+		// 点击控制播放
+		playButton.addEventListener('click', () => {
+			if (isPlaying) {
+				audioPlayer.pause();
+			} else {
+				audioPlayer.play()
+						.then(() => {
+							isPlaying = true;
+						})
+						.catch(error => {
+							console.error('播放失败:', error);
+						});
+			}
+		});
+
+		// 错误处理
+		audioPlayer.addEventListener('error', (error) => {
+			console.error('音频加载失败:', error);
+		});
+	</script>
+
 		<!--头部-->
 		<header class="header">
 			<img src="../images/index/stumalllogo.png" alt="" />
