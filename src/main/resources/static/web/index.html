@@ -32,8 +32,38 @@
 				border: none;
 				background-color: transparent;
 				transition: transform 0.1s linear;
+				z-index: 9999; /* 设置图片的层级高于其他元素 */
 			}
 		</style>
+
+
+		<style>
+			.emotion-image {
+				max-width: 200px;
+				max-height: 200px;
+				border: 1px solid #4a90e2;
+				border-radius: 8px;
+				cursor: pointer;
+				transition: transform 0.3s ease;
+				position: absolute;
+				background-color: white;
+				padding: 5px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+				transform-origin: center; /* 设置缩放的中心点 */
+			}
+
+			.emotion-image:hover {
+				transform: scale(1.05);
+			}
+
+			.emotion-instructions {
+				margin-top: 20px;
+				font-size: 18px;
+				color: #333333;
+			}
+		</style>
+
+
 	</head>
 
 	<body>
@@ -173,6 +203,10 @@
 		</div>
 		<!--头部结束-->
 		<!--导航结束-->
+
+	<div class="image-container">
+		<img class="emotion-image" id="emotionImage" src="../images/umi/smile-582x750.png" alt="表情">
+	</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -253,7 +287,7 @@
 					</script>
 				</div>
 			</div>
-			
+
 			<!--推荐栏目-->
 			<div class="row">
 				<div class="col-md-12">
@@ -291,6 +325,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!--页脚开始-->
 		<footer class="footer">
 			<!-- 图标-->
@@ -357,6 +392,35 @@
 			}
 		</script>
 
+	<script>
+		const images = [
+			'angry-582x750.png', 'calm-582x750.png', 'calm1-582x750.png', 'doubt-582x750.png', 'down-582x750.png',
+			'happy1-582x750.png', 'happy2-582x750.png','happy-582x750.png',
+			'helpless-582x750.png', 'helpless1-582x750.png',
+			'helpless2-582x750.png', 'proud-582x750.png', 'shock-582x750.png', 'shock1-582x750.png', 'smile-582x750.png',
+			'smile1-582x750.png'
+		];
+
+		function changeImage() {
+			// 随机选择一张图片
+			const randomIndex = Math.floor(Math.random() * images.length);
+			const imgElement = document.getElementById('emotionImage');
+			imgElement.src = `../images/umi/${images[randomIndex]}`;
+		}
+
+		const emotionImage = document.getElementById('emotionImage');
+
+		// 点击事件处理
+		emotionImage.addEventListener('click', (e) => {
+			changeImage();
+			e.stopPropagation();
+		});
+	</script>
+
+
 	</body>
 
 </html>
+
+
+
