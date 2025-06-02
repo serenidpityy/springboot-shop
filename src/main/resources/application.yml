@@ -18,8 +18,8 @@ mybatis:
     restart:
       enabled=true:
 
-
-
+server:
+  port:9999:
 
 
 

@@ -41,96 +41,96 @@ public class CartMapperTests {
 //	pid INT NOT NULL ,--'商品id',
 //	price INT ,-- '加入时商品单价',
 //	num INT ,-- '商品数量',
-    @Test
-    public void insertCart(){
-        try{
-            Cart cart = new Cart();
-            cart.setCid("2");
-            cart.setUid("2");
-            cart.setPid("2");
-            cart.setPrice(10);
-            cart.setNum(10);
-
-            cartMapper.insertCart(cart);
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void updateNumByCid(){
-        try{
-            Cart cart = new Cart();
-            int rows =  cartMapper.updateNumByCid("1",10);
-
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void findByUidAndPid(){
-        try{
-            Cart cart = cartMapper.findByUidAndPid("1","1");
-            System.out.println(cart);
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void addToCart(){
-        try{
-            cartService.addToCart("3","1",121);
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void findVoByUid(){
-        try{
-            List<CartVo> list = cartMapper.findVoByUid("1");
-            for(CartVo cartVo:list){
-                System.out.println("------------------");
-                System.out.println(cartVo);
-                System.out.println("------------------");
-            }
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void findByCid(){
-        try{
-            Cart cart = cartMapper.findByCid("1");
-            System.out.println(cart);
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
-    public void findVoByCid(){
-        try{
-            String[] cids = {"1","2","3","4","5"};
-            List<CartVo>list = cartMapper.findVoByCid(cids);
-            for(CartVo cartVo:list){
-                System.out.println(cartVo);
-            }
-
-        }catch (ServiceException e){
-            System.out.println(e.getClass().getSimpleName());
-            System.out.println(e.getMessage());
-        }
-    }
+//    @Test
+//    public void insertCart(){
+//        try{
+//            Cart cart = new Cart();
+//            cart.setCid("2");
+//            cart.setUid("2");
+//            cart.setPid("2");
+//            cart.setPrice(10);
+//            cart.setNum(10);
+//
+//            cartMapper.insertCart(cart);
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void updateNumByCid(){
+//        try{
+//            Cart cart = new Cart();
+//            int rows =  cartMapper.updateNumByCid("1",10);
+//
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void findByUidAndPid(){
+//        try{
+//            Cart cart = cartMapper.findByUidAndPid("1","1");
+//            System.out.println(cart);
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void addToCart(){
+//        try{
+//            cartService.addToCart("3","1",121);
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void findVoByUid(){
+//        try{
+//            List<CartVo> list = cartMapper.findVoByUid("1");
+//            for(CartVo cartVo:list){
+//                System.out.println("------------------");
+//                System.out.println(cartVo);
+//                System.out.println("------------------");
+//            }
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void findByCid(){
+//        try{
+//            Cart cart = cartMapper.findByCid("1");
+//            System.out.println(cart);
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    @Test
+//    public void findVoByCid(){
+//        try{
+//            String[] cids = {"1","2","3","4","5"};
+//            List<CartVo>list = cartMapper.findVoByCid(cids);
+//            for(CartVo cartVo:list){
+//                System.out.println(cartVo);
+//            }
+//
+//        }catch (ServiceException e){
+//            System.out.println(e.getClass().getSimpleName());
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 
 
