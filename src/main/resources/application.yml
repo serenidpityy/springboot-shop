@@ -1,12 +1,17 @@
 #配置数据源
+#spring:
+#  datasource:
+#    url: jdbc:sqlserver://localhost:1433;databaseName=store;encrypt=true;trustServerCertificate=true;
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    username: sa
+#    password: 123456
+
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=store;encrypt=true;trustServerCertificate=true;
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    username: sa
+    url: jdbc:mysql://mysql:3306/bookstore?useUnicode=true&characterEncoding=utf8
+    username: root
     password: 123456
-
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
   #配置MyBatis
